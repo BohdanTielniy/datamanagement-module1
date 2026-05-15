@@ -1,0 +1,32 @@
+project:
+  name: "telco_churn_project"
+  seed: 42
+  run_id_mode: "timestamp"
+  run_id: "run_local"
+
+data:
+  input_csv: "data/raw/WA_Fn-UseC_-Telco-Customer-Churn.csv"
+  target: "Churn"
+  drop_cols: ["customerID"]
+  num_cols: ["tenure", "MonthlyCharges", "TotalCharges"]
+  cat_cols: ["gender", "SeniorCitizen", "Partner", "Dependents", 
+             "PhoneService", "MultipleLines", "InternetService", 
+             "OnlineSecurity", "OnlineBackup", "DeviceProtection", 
+             "TechSupport", "StreamingTV", "StreamingMovies", 
+             "Contract", "PaperlessBilling", "PaymentMethod"]
+  test_size: 0.2
+
+model:
+  task: "classification"
+  name: "rf" # rf | logreg
+  params:
+    n_estimators: 200
+    max_depth: 16
+    class_weight: "balanced"
+
+output:
+  artifacts_dir: "artifacts"
+  logs_dir: "logs"
+  save_predictions: true
+  save_model: true
+  save_report: true
